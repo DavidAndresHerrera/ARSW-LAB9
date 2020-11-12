@@ -9,19 +9,30 @@ module.exports = async function (context, req) {
 
     if (nth < 0)
         throw 'must be greater than 0'
-    else if (nth === 0)
-        answer = nth_2
-    else if (nth === 1)
-        answer = nth_1
     else {
-        for (var i = 0; i < nth - 1; i++) {
-            answer = nth_2.add(nth_1)
-            nth_2 = nth_1
-            nth_1 = answer
-        }
+        answer = fibo(nth)
     }
 
     context.res = {
         body: answer.toString()
     };
+
+}
+let lista= {};
+function fibo(num){
+
+    if (num in lista){
+        return lista[num];
+    }
+    else if( num == 0){
+        lista[num] = bigInt.zero;
+        return bigInt.zero;
+    }
+    else if (num == 1){
+        lista[num] = bigInt.one;
+    }
+    else{
+        lista[num] = fibo(num-1).add(fibo(num-2));
+    }
+    return lista[num];
 }
